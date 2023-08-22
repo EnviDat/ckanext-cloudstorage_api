@@ -11,7 +11,7 @@ dependencies = [
 requires-python = ">=3.8"
 readme = "README.md"
 license = {text = "MIT"}
-keywords = ["CKAN", "cloudstorage", "token", "auth"]
+keywords = ["CKAN", "cloudstorage", "s3", "bucket", "cloud"]
 classifiers = [
     "Topic :: Utilities",
     "Programming Language :: Python",
