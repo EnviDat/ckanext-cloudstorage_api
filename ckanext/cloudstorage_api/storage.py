@@ -88,7 +88,7 @@ class CloudStorage(object):
         """A dictionary of options ckanext-cloudstorage has been configured to
         pass to the apache-libcloud driver.
         """
-        return literal_eval(config["ckanext.cloudstorage.driver_options"])
+        return literal_eval(config["ckanext.cloudstorage_api.driver_options"])
 
     @property
     def driver_name(self):
@@ -101,23 +101,21 @@ class CloudStorage(object):
             This value is used to lookup the apache-libcloud driver to use
             based on the Provider enum.
         """
-        return config["ckanext.cloudstorage.driver"]
+        return "S3"
 
     @property
     def container_name(self):
         """The name of the container (also called buckets on some providers)
         ckanext-cloudstorage is configured to use.
         """
-        return config["ckanext.cloudstorage.container_name"]
+        return config["ckanext.cloudstorage_api.bucket_name"]
 
     @property
     def use_secure_urls(self):
         """`True` if ckanext-cloudstroage is configured to generate secure
         one-time URLs to resources, `False` otherwise.
         """
-        return p.toolkit.asbool(
-            config.get("ckanext.cloudstorage.use_secure_urls", False)
-        )
+        return True
 
     @property
     def leave_files(self):
@@ -125,7 +123,9 @@ class CloudStorage(object):
         provider instead of removing them when a resource/package is deleted,
         otherwise `False`.
         """
-        return p.toolkit.asbool(config.get("ckanext.cloudstorage.leave_files", False))
+        return p.toolkit.asbool(
+            config.get("ckanext.cloudstorage_api.leave_files", False)
+        )
 
     @property
     def can_use_advanced_azure(self):
@@ -178,9 +178,7 @@ class CloudStorage(object):
         """`True` if ckanext-cloudstorage is configured to guess mime types,
         `False` otherwise.
         """
-        return p.toolkit.asbool(
-            config.get("ckanext.cloudstorage.guess_mimetype", False)
-        )
+        return False
 
 
 class ResourceCloudStorage(CloudStorage):

@@ -10,12 +10,12 @@ log = logging.getLogger(__name__)
 
 
 @click.group()
-def cloudstorage():
-    """CloudStorage management commands."""
+def cloudstorage_api():
+    """CloudStorageApi management commands."""
     pass
 
 
-@cloudstorage.command()
+@cloudstorage_api.command()
 def initdb():
     """Reinitalize database tables."""
     drop_tables()
@@ -25,4 +25,4 @@ def initdb():
 
 def get_cli_commands():
     """Gather CLI commands via click group."""
-    return [cloudstorage]
+    return [cloudstorage_api]

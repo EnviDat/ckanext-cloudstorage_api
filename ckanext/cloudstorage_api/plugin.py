@@ -1,6 +1,7 @@
 """Init plugin with CKAN interfaces."""
 
 import logging
+import os
 
 from ckan.plugins import SingletonPlugin, implements, interfaces
 
@@ -41,7 +42,7 @@ class CloudstorageAPIPlugin(SingletonPlugin):
         required_keys = (
             "ckanext.cloudstorage_api.bucket_name",
             "ckanext.cloudstorage_api.host",
-            # "ckanext.cloudstorage_api.region",
+            "ckanext.cloudstorage_api.region",
             "ckanext.cloudstorage_api.access_key",
             "ckanext.cloudstorage_api.secret_key",
         )
@@ -49,6 +50,14 @@ class CloudstorageAPIPlugin(SingletonPlugin):
         for rk in required_keys:
             if config.get(rk) is None:
                 raise RuntimeError(f"Required configuration option {rk} not found.")
+
+        # Put all into single driver_options var
+        config["ckanext.cloudstorage_api.driver_options"] = {
+            "host": config.get("ckanext.cloudstorage_api.host"),
+            "region_name": config.get("ckanext.cloudstorage_api.region"),
+            "key": config.get("ckanext.cloudstorage_api.access_key"),
+            "secret": config.get("ckanext.cloudstorage_api.secret_key"),
+        }
 
     # IUploader
     def get_resource_uploader(self, data_dict):

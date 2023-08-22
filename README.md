@@ -53,6 +53,8 @@ Required variables are set in your ckan.ini:
   - Description: (Optional) maximum time a multipart part can exist.
     Multiparts will be cleaned if older than this by
     calling the cloudstorage_clean_multiparts endpoint.
+- **ckanext.cloudstorage_api.leave_files**
+  - Description: (Optional) leave files on S3 after resource deletion.
 
 ## Endpoints
 
