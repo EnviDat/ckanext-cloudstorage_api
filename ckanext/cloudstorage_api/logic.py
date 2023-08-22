@@ -10,7 +10,7 @@ import ckan.plugins.toolkit as toolkit
 import libcloud.security
 from sqlalchemy.orm.exc import NoResultFound
 
-from ckanext.cloudstorage_api.model import MultipartPart, MultipartUpload
+from ckanext.cloudstorage_api.models import MultipartPart, MultipartUpload
 from ckanext.cloudstorage_api.storage import ResourceCloudStorage
 
 if toolkit.check_ckan_version("2.9"):
