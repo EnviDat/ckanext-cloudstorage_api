@@ -1,6 +1,7 @@
 import binascii
 import cgi
 import hashlib
+import logging
 import os
 import ssl
 import traceback
@@ -12,8 +13,12 @@ import libcloud.security
 from botocore.config import Config as BotoConfig
 from ckan import model
 from ckan.lib import munge
-from ckan.plugins.toolkit import asbool
-from ckan.plugins.toolkit import config as ckan_config
+from ckan.plugins.toolkit import (
+    asbool,
+)
+from ckan.plugins.toolkit import (
+    config as ckan_config,
+)
 from libcloud.storage.providers import get_driver
 from libcloud.storage.types import ObjectDoesNotExistError, Provider
 from werkzeug.datastructures import (
@@ -23,7 +28,6 @@ from werkzeug.datastructures import (
 ALLOWED_UPLOAD_TYPES = (cgi.FieldStorage, FlaskFileStorage)
 AWS_UPLOAD_PART_SIZE = 5 * 1024 * 1024
 
-import logging
 
 logger = logging.getLogger(__name__)
 

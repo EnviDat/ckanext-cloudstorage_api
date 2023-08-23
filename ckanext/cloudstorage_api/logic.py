@@ -2,6 +2,8 @@
 
 import datetime
 import logging
+import sys
+import traceback
 
 import ckan.lib.helpers as h
 import ckan.logic as logic
@@ -12,14 +14,6 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from ckanext.cloudstorage_api.models import MultipartPart, MultipartUpload
 from ckanext.cloudstorage_api.storage import ResourceCloudStorage
-
-if toolkit.check_ckan_version("2.9"):
-    config = toolkit.config
-else:
-    pass
-
-import sys
-import traceback
 
 libcloud.security.VERIFY_SSL_CERT = True
 
@@ -452,7 +446,7 @@ def clean_multipart(context, data_dict):
     h.check_access("cloudstorage_clean_multipart", data_dict)
     uploader = ResourceCloudStorage({})
     delta = datetime.timedelta(
-        float(config.get("ckanext.cloudstorage_api.max_multipart_lifetime", 7))
+        float(toolkit.config.get("ckanext.cloudstorage_api.max_multipart_lifetime", 7))
     )
     oldest_allowed = datetime.datetime.utcnow() - delta
 
