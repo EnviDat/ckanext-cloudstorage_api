@@ -40,20 +40,27 @@ pip install ckanext-cloudstorage-api
 Required variables are set in your ckan.ini:
 
 - **ckanext.cloudstorage_api.host**
+  - Type: str.
   - Description: The S3 host URL.
 - **ckanext.cloudstorage_api.region**
+  - Type: str.
   - Description: The S3 host region.
 - **ckanext.cloudstorage_api.access_key**
+  - Type: str.
   - Description: Access key for S3.
 - **ckanext.cloudstorage_api.secret_key**
+  - Type: str.
   - Description: Secret key for S3.
 - **ckanext.cloudstorage_api.bucket_name**
+  - Type: str.
   - Description: The name of the S3 bucket to store files.
 - **ckanext.cloudstorage_api.max_multipart_lifetime**
+  - Type: str.
   - Description: (Optional) maximum time a multipart part can exist.
     Multiparts will be cleaned if older than this by
     calling the cloudstorage_clean_multiparts endpoint.
 - **ckanext.cloudstorage_api.leave_files**
+  - Type: bool.
   - Description: (Optional) leave files on S3 after resource deletion.
 
 ## Endpoints
