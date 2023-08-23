@@ -52,7 +52,7 @@ def _delete_multipart(upload, uploader):
     return resp
 
 
-def check_multipart(context, data_dict):
+def check_multiparts(context, data_dict):
     """Check whether unfinished multipart upload already exists.
 
     :param context:

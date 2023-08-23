@@ -9,6 +9,7 @@ from ckanext.cloudstorage_api.auth import get_auth_functions
 from ckanext.cloudstorage_api.cli import get_cli_commands
 from ckanext.cloudstorage_api.logic import (
     abort_multipart,
+    check_multiparts,
     clean_multipart,
     finish_multipart,
     get_presigned_upload_url_list_multipart,
@@ -16,7 +17,6 @@ from ckanext.cloudstorage_api.logic import (
     get_presigned_url_download,
     initiate_multipart,
     list_parts,
-    multipart_check,
 )
 from ckanext.cloudstorage_api.storage import ResourceCloudStorage
 
@@ -79,6 +79,7 @@ class CloudstorageAPIPlugin(SingletonPlugin):
 
     # IAuthFunctions
     def get_auth_functions(self):
+        """API actions that require auth first."""
         return {
             "cloudstorage_initiate": initiate_multipart,
             "cloudstorage_presign_download": get_presigned_url_download,
@@ -87,7 +88,7 @@ class CloudstorageAPIPlugin(SingletonPlugin):
             "cloudstorage_list_parts": list_parts,
             "cloudstorage_finish": finish_multipart,
             "cloudstorage_abort": abort_multipart,
-            "cloudstorage_check": multipart_check,
+            "cloudstorage_check": check_multiparts,
             "cloudstorage_clean_multiparts": clean_multipart,
         }
 
