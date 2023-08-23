@@ -34,7 +34,7 @@ class CloudstorageAPIPlugin(SingletonPlugin):
     implements(interfaces.IActions)
     implements(interfaces.IAuthFunctions)
     implements(interfaces.IClick)
-    implements(interfaces.IResourceController)
+    implements(interfaces.IResourceController, inherit=True)
 
     # IConfigurable
     def configure(self, config):
