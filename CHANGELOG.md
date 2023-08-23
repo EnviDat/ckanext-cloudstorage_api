@@ -1,3 +1,9 @@
+## 0.1.2 (2023-08-23)
+
+### Fix
+
+- refactor storage.py, remove azure, simplify
+
 ## 0.1.1 (2023-08-22)
 
 ### Fix
