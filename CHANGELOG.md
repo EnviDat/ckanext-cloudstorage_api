@@ -1,3 +1,9 @@
+## 0.1.4 (2023-08-23)
+
+### Fix
+
+- inherit IResourceController methods to fix v2.10
+
 ## 0.1.3 (2023-08-23)
 
 ### Fix
