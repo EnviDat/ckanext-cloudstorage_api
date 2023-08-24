@@ -5,7 +5,6 @@ import logging
 import os
 import ssl
 import traceback
-from ast import literal_eval
 
 import boto3
 import libcloud.common.types as types
@@ -83,7 +82,7 @@ class CloudStorage(object):
         """A dictionary of options ckanext-cloudstorage has been configured to
         pass to the apache-libcloud driver.
         """
-        return literal_eval(ckan_config["ckanext.cloudstorage_api.driver_options"])
+        return ckan_config["ckanext.cloudstorage_api.driver_options"]
 
     @property
     def driver_name(self):
