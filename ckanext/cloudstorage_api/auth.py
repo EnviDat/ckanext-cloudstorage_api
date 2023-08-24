@@ -14,7 +14,7 @@ def get_auth_functions():
         "cloudstorage_finish": finish_multipart,
         "cloudstorage_abort": abort_multipart,
         "cloudstorage_check": check_multiparts,
-        "cloudstorage_clean_multiparts": clean_multipart,
+        "cloudstorage_clean_multiparts": clean_multiparts,
     }
 
 
@@ -58,6 +58,6 @@ def check_multiparts(context, data_dict):
     return {"success": check_access("resource_create", context, data_dict)}
 
 
-def clean_multipart(context, data_dict):
+def clean_multiparts(context, data_dict):
     """Place auth in front of CKAN action."""
     return {"success": False}

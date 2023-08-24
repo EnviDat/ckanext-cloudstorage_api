@@ -10,7 +10,7 @@ from ckanext.cloudstorage_api.cli import get_cli_commands
 from ckanext.cloudstorage_api.logic import (
     abort_multipart,
     check_multiparts,
-    clean_multipart,
+    clean_multiparts,
     finish_multipart,
     get_presigned_upload_url_list_multipart,
     get_presigned_upload_url_multipart,
@@ -81,15 +81,15 @@ class CloudstorageAPIPlugin(SingletonPlugin):
     def get_auth_functions(self):
         """API actions that require auth first."""
         return {
-            "cloudstorage_initiate": initiate_multipart,
+            "cloudstorage_initiate_multipart": initiate_multipart,
             "cloudstorage_presign_download": get_presigned_url_download,
             "cloudstorage_presign_upload": get_presigned_upload_url_multipart,
             "cloudstorage_presign_upload_list": get_presigned_upload_url_list_multipart,
             "cloudstorage_list_parts": list_parts,
-            "cloudstorage_finish": finish_multipart,
-            "cloudstorage_abort": abort_multipart,
-            "cloudstorage_check": check_multiparts,
-            "cloudstorage_clean_multiparts": clean_multipart,
+            "cloudstorage_finish_multipart": finish_multipart,
+            "cloudstorage_abort_multipart": abort_multipart,
+            "cloudstorage_check_multipart": check_multiparts,
+            "cloudstorage_clean_multipart": clean_multiparts,
         }
 
     # IClick

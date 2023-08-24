@@ -429,7 +429,7 @@ def abort_multipart(context, data_dict):
     return aborted
 
 
-def clean_multipart(context, data_dict):
+def clean_multiparts(context, data_dict):
     """Clean old multipart uploads.
 
     :param context:
@@ -442,8 +442,8 @@ def clean_multipart(context, data_dict):
     :rtype: dict
 
     """
-    log.debug("clean_multipart running...")
-    h.check_access("cloudstorage_clean_multipart", data_dict)
+    log.debug("clean_multiparts running...")
+    h.check_access("cloudstorage_clean_multiparts", data_dict)
     uploader = ResourceCloudStorage({})
     delta = datetime.timedelta(
         float(toolkit.config.get("ckanext.cloudstorage_api.max_multipart_lifetime", 7))
