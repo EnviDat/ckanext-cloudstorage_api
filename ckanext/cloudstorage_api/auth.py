@@ -6,15 +6,15 @@ from ckan.logic import check_access
 def get_auth_functions():
     """Collect all auth functions for plugin."""
     return {
-        "cloudstorage_initiate": initiate_multipart,
-        "cloudstorage_presign_download": get_presigned_url_download,
-        "cloudstorage_presign_upload": get_presigned_upload_url_multipart,
-        "cloudstorage_presign_upload_list": get_presigned_upload_url_list_multipart,
-        "cloudstorage_list_parts": list_parts,
-        "cloudstorage_finish": finish_multipart,
-        "cloudstorage_abort": abort_multipart,
-        "cloudstorage_check": check_multiparts,
-        "cloudstorage_clean_multiparts": clean_multiparts,
+        "cloudstorage_initiate_multipart": initiate_multipart,
+        "cloudstorage_get_presigned_url_download": get_presigned_url_download,
+        "cloudstorage_get_presigned_url_multipart": get_presigned_upload_url_multipart,
+        "cloudstorage_get_presigned_url_list_multipart": get_presigned_upload_url_list_multipart,
+        "cloudstorage_multipart_list_parts": list_parts,
+        "cloudstorage_finish_multipart": finish_multipart,
+        "cloudstorage_abort_multipart": abort_multipart,
+        "cloudstorage_check_multipart": check_multiparts,
+        "cloudstorage_clean_multipart": clean_multiparts,
     }
 
 
