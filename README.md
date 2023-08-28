@@ -54,6 +54,10 @@ Required variables are set in your ckan.ini:
 - **ckanext.cloudstorage_api.bucket_name**
   - Type: str.
   - Description: The name of the S3 bucket to store files.
+- **ckanext.cloudstorage_api.bucket_path**
+  - Type: str.
+  - Description: (Optional) The path within the S3 to store files.
+    Default: "/", i.e. bucket root.
 - **ckanext.cloudstorage_api.max_multipart_lifetime**
   - Type: str.
   - Description: (Optional) maximum time a multipart part can exist.
@@ -65,4 +69,21 @@ Required variables are set in your ckan.ini:
 
 ## Endpoints
 
-TBC
+**Actions**
+
+`{CKAN_HOST}/api/3/action/{ACTION_NAME}`
+
+- cloudstorage_initiate_multipart
+- cloudstorage_get_presigned_url_download
+- cloudstorage_get_presigned_url_multipart
+- cloudstorage_get_presigned_url_list_multipart
+- cloudstorage_multipart_list_parts
+- cloudstorage_finish_multipart
+- cloudstorage_abort_multipart
+- cloudstorage_check_multipart
+- cloudstorage_clean_multipart
+
+**Blueprints**
+
+- `/download/<resource_id>`
+  - Description: redirect to download a resource directly.
