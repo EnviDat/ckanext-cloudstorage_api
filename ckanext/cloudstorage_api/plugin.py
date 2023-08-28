@@ -6,6 +6,7 @@ import os
 from ckan.plugins import SingletonPlugin, implements, interfaces
 
 from ckanext.cloudstorage_api.auth import get_auth_functions
+from ckanext.cloudstorage_api.blueprints import get_blueprints
 from ckanext.cloudstorage_api.cli import get_cli_commands
 from ckanext.cloudstorage_api.logic import (
     abort_multipart,
@@ -33,6 +34,7 @@ class CloudstorageAPIPlugin(SingletonPlugin):
     implements(interfaces.IUploader)
     implements(interfaces.IActions)
     implements(interfaces.IAuthFunctions)
+    implements(interfaces.IBlueprint, inherit=True)
     implements(interfaces.IClick)
     implements(interfaces.IResourceController, inherit=True)
 
@@ -75,11 +77,6 @@ class CloudstorageAPIPlugin(SingletonPlugin):
     # IActions
     def get_actions(self):
         """Actions to be accessible via the API."""
-        return get_auth_functions()
-
-    # IAuthFunctions
-    def get_auth_functions(self):
-        """API actions that require auth first."""
         # TODO coordinate with frontend to rename
         # TODO also rename in auth.py
         # "cloudstorage_initiate": initiate_multipart,
@@ -94,14 +91,28 @@ class CloudstorageAPIPlugin(SingletonPlugin):
         return {
             "cloudstorage_initiate_multipart": initiate_multipart,
             "cloudstorage_get_presigned_url_download": get_presigned_url_download,
-            "cloudstorage_get_presigned_url_multipart": get_presigned_upload_url_multipart,
-            "cloudstorage_get_presigned_url_list_multipart": get_presigned_upload_url_list_multipart,
+            "cloudstorage_get_presigned_url_multipart": (
+                get_presigned_upload_url_multipart
+            ),
+            "cloudstorage_get_presigned_url_list_multipart": (
+                get_presigned_upload_url_list_multipart
+            ),
             "cloudstorage_multipart_list_parts": list_parts,
             "cloudstorage_finish_multipart": finish_multipart,
             "cloudstorage_abort_multipart": abort_multipart,
             "cloudstorage_check_multipart": check_multiparts,
             "cloudstorage_clean_multipart": clean_multiparts,
         }
+
+    # IBlueprint
+    def get_blueprint(self):
+        """Get blueprints, i.e. direct URLs from plugin."""
+        return get_blueprints(self.name, self.__module__)
+
+    # IAuthFunctions
+    def get_auth_functions(self):
+        """API actions that require auth first."""
+        return get_auth_functions()
 
     # IClick
     def get_commands(self):
