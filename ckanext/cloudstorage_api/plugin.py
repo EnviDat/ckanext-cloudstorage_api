@@ -19,7 +19,6 @@ from ckanext.cloudstorage_api.logic import (
     initiate_multipart,
     list_parts,
 )
-from ckanext.cloudstorage_api.storage import ResourceCloudStorage
 
 log = logging.getLogger(__name__)
 
@@ -31,7 +30,6 @@ class CloudstorageAPIPlugin(SingletonPlugin):
     """
 
     implements(interfaces.IConfigurable)
-    implements(interfaces.IUploader)
     implements(interfaces.IActions)
     implements(interfaces.IAuthFunctions)
     implements(interfaces.IBlueprint, inherit=True)
@@ -60,19 +58,6 @@ class CloudstorageAPIPlugin(SingletonPlugin):
             "key": config.get("ckanext.cloudstorage_api.access_key"),
             "secret": config.get("ckanext.cloudstorage_api.secret_key"),
         }
-
-    # IUploader
-    def get_resource_uploader(self, data_dict):
-        """We provide a custom Resource uploader."""
-        return ResourceCloudStorage(data_dict)
-
-    def get_uploader(self, upload_to, old_filename=None):
-        """We don't provide misc-file storage.
-
-        (group images for example)
-        Returning None here will use the default Uploader.
-        """
-        return None
 
     # IActions
     def get_actions(self):
@@ -132,7 +117,7 @@ class CloudstorageAPIPlugin(SingletonPlugin):
         else:
             return
         # just ignore simple links
-        if res["url_type"] != "upload":
+        if res["url_type"] != "s3":
             return
 
         # we don't want to change original item from resources, just in case

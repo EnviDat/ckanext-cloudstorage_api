@@ -112,6 +112,11 @@ class CloudStorage(object):
         """
         return asbool(ckan_config.get("ckanext.cloudstorage_api.leave_files", False))
 
+    @property
+    def bucket_path(self):
+        """The path in the S3 bucket to store files under."""
+        return ckan_config.get("ckanext.cloudstorage_api.bucket_path", "/")
+
 
 class ResourceCloudStorage(CloudStorage):
     def __init__(self, resource):
@@ -121,6 +126,9 @@ class ResourceCloudStorage(CloudStorage):
         :param resource: The resource dict.
         """
         super(ResourceCloudStorage, self).__init__()
+
+        # Distinguish upload type from others in DB
+        resource["url_type"] = "s3"
 
         self.filename = None
         self.old_filename = None
@@ -139,13 +147,10 @@ class ResourceCloudStorage(CloudStorage):
             self.filename = munge.munge_filename(upload_field_storage.filename)
             self.file_upload = _get_underlying_file(upload_field_storage)
             resource["url"] = self.filename
-            resource["url_type"] = "upload"
         elif multipart_name:
             # This means that file was successfully uploaded and stored
             # at cloud.
-            # Currently implemented just AWS version
             resource["url"] = munge.munge_filename(multipart_name)
-            resource["url_type"] = "upload"
         elif self._clear and resource.get("id"):
             # Apparently, this is a created-but-not-commited resource whose
             # file upload has been canceled. We're copying the behaviour of
@@ -153,7 +158,6 @@ class ResourceCloudStorage(CloudStorage):
             old_resource = model.Session.query(model.Resource).get(resource["id"])
 
             self.old_filename = old_resource.url
-            resource["url_type"] = ""
 
     def path_from_filename(self, rid, filename):
         """Returns a bucket path for the given resource_id and filename.

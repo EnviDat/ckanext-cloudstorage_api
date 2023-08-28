@@ -159,7 +159,7 @@ def get_presigned_url_download(context, data_dict):
         raise logic.NotFound
 
     # if resource type is url, return its url
-    if resource.url_type != "upload":
+    if resource.url_type != "s3":
         return resource.url
 
     # request a presigned GET url
@@ -390,7 +390,12 @@ def finish_multipart(context, data_dict):
                 )
         except Exception as e:
             log.error(e)
-    return {"commited": True, "url": s3_location}
+
+    host = toolkit.config.get("ckan.site_url")
+    resource_id = data_dict.get("id")
+    download_url = f"{host}/download/{resource_id}"
+    log.debug(f"Returning download_url: {download_url}")
+    return {"commited": True, "url": download_url}
 
 
 def abort_multipart(context, data_dict):
