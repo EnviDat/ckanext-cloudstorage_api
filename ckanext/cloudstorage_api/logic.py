@@ -5,7 +5,6 @@ import logging
 import sys
 import traceback
 
-import ckan.lib.helpers as h
 import ckan.logic as logic
 import ckan.model as model
 import ckan.plugins.toolkit as toolkit
@@ -55,7 +54,6 @@ def check_multiparts(context, data_dict):
     :rtype: NoneType or dict
 
     """
-    h.check_access("cloudstorage_check_multipart", data_dict)
     id = toolkit.get_or_bust(data_dict, "id")
 
     try:
@@ -87,7 +85,6 @@ def initiate_multipart(context, data_dict):
     """
     log.debug("initiate_multipart")
 
-    h.check_access("cloudstorage_initiate_multipart", data_dict)
     id, name, size = toolkit.get_or_bust(data_dict, ["id", "name", "size"])
     user_obj = model.User.get(context["user"])
     user_id = user_obj.id if user_obj else None
@@ -156,12 +153,10 @@ def get_presigned_url_download(context, data_dict):
 
     model = context["model"]
     resource = model.Resource.get(id)
-    resource_context = dict(context, resource=resource)
+    dict(context, resource=resource)
 
     if not resource:
         raise logic.NotFound
-
-    toolkit.check_access("resource_show", resource_context, data_dict)
 
     # if resource type is url, return its url
     if resource.url_type != "upload":
@@ -192,8 +187,6 @@ def get_presigned_upload_url_multipart(context, data_dict):
     """Generate a presign url for file upload."""
     log.debug("get_presigned_url_multipart")
 
-    h.check_access("cloudstorage_get_presigned_url_multipart", data_dict)
-
     signed_url = None
 
     try:
@@ -223,8 +216,6 @@ def get_presigned_upload_url_multipart(context, data_dict):
 def get_presigned_upload_url_list_multipart(context, data_dict):
     """Generate a list of presigned URLs for sequential file upload."""
     log.debug("get_presigned_url_list_multipart")
-
-    h.check_access("cloudstorage_get_presigned_url_multipart", data_dict)
 
     presigned_urls = {}
 
@@ -258,8 +249,6 @@ def get_presigned_upload_url_list_multipart(context, data_dict):
 def list_parts(context, data_dict):
     """List multipart parts available in the bucket."""
     log.debug("multipart_list_parts")
-
-    # h.check_access("cloudstorage_multipart_list_parts", data_dict)
 
     multipart_parts = {}
 
@@ -306,7 +295,6 @@ def finish_multipart(context, data_dict):
 
     """
     log.debug("finish_multipart.")
-    h.check_access("cloudstorage_finish_multipart", data_dict)
     upload_id = toolkit.get_or_bust(data_dict, "uploadId")
     log.debug(f"upload_id: {upload_id}")
     try:
@@ -407,7 +395,6 @@ def finish_multipart(context, data_dict):
 
 def abort_multipart(context, data_dict):
     """Abort multipart upload."""
-    h.check_access("cloudstorage_abort_multipart", data_dict)
     id = toolkit.get_or_bust(data_dict, ["id"])
     uploader = ResourceCloudStorage({})
 
@@ -443,7 +430,6 @@ def clean_multiparts(context, data_dict):
 
     """
     log.debug("clean_multiparts running...")
-    h.check_access("cloudstorage_clean_multiparts", data_dict)
     uploader = ResourceCloudStorage({})
     delta = datetime.timedelta(
         float(toolkit.config.get("ckanext.cloudstorage_api.max_multipart_lifetime", 7))
