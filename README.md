@@ -29,6 +29,11 @@ Supports any S3-like API, e.g. Minio, Ceph Object Gateway.
 
 Full support for all Apache libcloud drivers was dropped, due to primarily relying on S3 multipart and pre-signed URL capabilities.
 
+
+## Obsolete
+This extension is no longer maintained. 
+
+
 ## Install
 
 ```bash
